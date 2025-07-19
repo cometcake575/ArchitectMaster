@@ -5,8 +5,9 @@ from json import loads, dumps
 from extra_convert import do_extra
 
 Tk().withdraw()
-files = askopenfilenames(filetypes=[('JSON Files', '.json')])
-savedir = askdirectory()
+
+files = askopenfilenames(title="Select DecorationMaster Files", filetypes=[('JSON Files', '.json')])
+savedir = askdirectory(title="Select Destination Folder")
 
 architect_data = {}
 
@@ -17,6 +18,7 @@ def convert_name(decomaster_name: str) -> [str, float]:
     if decomaster_name not in conversion_info:
         return None
     return conversion_info[decomaster_name]
+
 
 for file in files:
     data = loads(open(file, "r").read())["items"]
@@ -53,7 +55,8 @@ for file in files:
 
         extr = do_extra(item, new_object)
         if extr is not None:
-            architect_data[scene].append(extr)
+            for ex in extr:
+                architect_data[scene].append(ex)
 
         architect_data[scene].append(new_object)
 
