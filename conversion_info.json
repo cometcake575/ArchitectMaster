@@ -53,5 +53,8 @@
   "zote_detection": ["Coloured Square", 0.0],
   "zote_wall": ["Ancestral Mound Gate", 0.0],
   "IMG_Lantern": ["Darkness", 0.0],
-  "binoculars": ["Binoculars", 0.0]
+  "binoculars": ["Binoculars", 0.0],
+  "hazard_saver": ["White Palace Shield Gate", -0.27],
+  "twinkle_platform": ["White Palace Shield Gate", -0.27],
+  "IMG_TP": ["Teleport Point", 0.0]
 }

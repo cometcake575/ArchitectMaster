@@ -1,4 +1,5 @@
 import copy
+import uuid
 
 
 def do_extra(original: dict, new: dict):
@@ -157,5 +158,65 @@ def do_extra(original: dict, new: dict):
         placey = new["placement"]["pos"]["y"]
 
         return [{"placement": {"name": "Lantern Binding", "pos": {"x": placex, "y": placey, "z": 0.0}, "flipped": False}}]
+
+    if old_name == "HK_trap_spike":
+        new["config"] = {"animator_offset":str(original["time_offset"])}
+
+    if old_name == "IMG_TP":
+        placex = new["placement"]["pos"]["x"]
+        placey = new["placement"]["pos"]["y"]
+
+        new["listeners"] = [{"type":"teleport","name":"tppoint" + original["Identity"]}]
+
+        return [{"placement": {"name": "Trigger Zone", "pos": {"x": placex, "y": placey, "z": 0.0},
+                               "flipped": False, "scale": 0.25},
+                 "events": [{"type":"zoneenter","name":"tppoint" + original["Destination"]}],
+                 "listeners": [{"type":"enable","name":"enabletppoint" + original["Identity"]},
+                               {"type":"disable","name":"tppoint" + original["Identity"]}]},
+                {"placement": {"name": "Timer", "pos": {"x": placex, "y": placey, "z": 0.0},
+                               "flipped": False},
+                 "events": [{"type":"oncall","name":"enabletppoint" + original["Identity"]}],
+                 "listeners": [{"type":"disable","name":"enabletppoint" + original["Identity"]}, {"type":"enable","name":"tppoint" + original["Identity"]}]},
+                {"placement": {"name": "Coloured Square", "pos": {"x": placex, "y": placey, "z": 0.0},
+                               "flipped": False, "scale": 0.15, "rotation": 45},
+                 "config": {"r": 0.2, "g": 0.2, "b": 0.6}}]
+
+    if old_name == "hazard_saver":
+        new["placement"]["pos"]["y"] -= 1
+
+        placex = new["placement"]["pos"]["x"]
+        placey = new["placement"]["pos"]["y"]
+
+        if "scale" not in new["placement"]:
+            new["placement"]["scale"] = 1
+        new["placement"]["scale"] *= 0.7
+
+        new["listeners"] = [{"type":"close","name":"HrPlatform"},{"type":"open","name":"HrPlatform"}]
+        new["config"] = {"shield_open_time":"5","shield_close_time":"0","gate_start_open":"True"}
+
+        return [{"placement": {"name": "Player Hook", "pos": {"x": placex, "y": placey, "z": 0.0}, "flipped": False},
+                 "events": [{"type":"OnHazardRespawn","name":"HrPlatform"}]},
+                {"placement": {"name": "Hazard Respawn point", "pos": {"x": placex, "y": placey, "z": 0.0},
+                               "flipped": False, "scale": 10}}]
+
+    if old_name == "twinkle_platform":
+        if "scale" not in new["placement"]:
+            new["placement"]["scale"] = 1
+        new["placement"]["scale"] *= 0.9
+        new["placement"]["pos"]["y"] -= 0.15
+
+        placex = new["placement"]["pos"]["x"]
+        placey = new["placement"]["pos"]["y"]
+
+        object_id = str(uuid.uuid4())[:8]
+        new["listeners"] = [{"type":"open","name":"twinkle" + object_id},
+                            {"type":"close","name":"twinkle" + object_id, "times": 2}]
+        new["config"] = {"shield_open_time":str(float(original["Time"]) / 2),"shield_close_time":"0"}
+
+        return [{"placement": {"name": "Timer", "pos": {"x": placex, "y": placey, "z": 0.0},
+                               "flipped": False},
+                 "events": [{"type":"oncall","name":"twinkle" + object_id}],
+                 "config": {"timer_delay":original["Time"],"timer_start":original["Offset"]}
+                 }]
 
     return None
