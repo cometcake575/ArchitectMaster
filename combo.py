@@ -4,8 +4,7 @@ from tkinter import Tk
 from tkinter.filedialog import askopenfilenames, askdirectory
 from json import loads, dumps
 
-cinfo = """
-{
+conversion_info = {
   "IMG_MantisClaw": ["Mantis Claw Binding", 0.0],
   "IMG_MonarchWings": ["Monarch Wings Binding", 0.0],
   "IMG_MothwingCloak": ["Dash Binding", 0.0],
@@ -64,7 +63,7 @@ cinfo = """
   "hazard_saver": ["White Palace Shield Gate", -0.27],
   "twinkle_platform": ["White Palace Shield Gate", -0.27],
   "IMG_TP": ["Teleport Point", 0.0]
-}"""
+}
 
 
 def do_extra(original: dict, new: dict):
@@ -295,9 +294,6 @@ files = askopenfilenames(title="Select DecorationMaster Files", filetypes=[('JSO
 savedir = askdirectory(title="Select Destination Folder")
 
 architect_data = {}
-
-conversion_info = loads(cinfo)
-
 
 def convert_name(decomaster_name: str) -> [str, float]:
     if decomaster_name not in conversion_info:
