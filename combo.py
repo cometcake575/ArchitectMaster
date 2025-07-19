@@ -225,7 +225,8 @@ def do_extra(original: dict, new: dict):
             {"placement": {"name": "Lantern Binding", "pos": {"x": placex, "y": placey, "z": 0.0}, "flipped": False}}]
 
     if old_name == "HK_trap_spike":
-        new["config"] = {"animator_offset": str(original["time_offset"])}
+        if "time_offset" in original:
+            new["config"] = {"animator_offset": str(original["time_offset"])}
 
     if old_name == "IMG_TP":
         placex = new["placement"]["pos"]["x"]
