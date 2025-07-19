@@ -249,6 +249,7 @@ def do_extra(original: dict, new: dict):
 
     if old_name == "hazard_saver":
         new["placement"]["pos"]["y"] -= 1
+        new["placement"]["rotation"] = 270
 
         placex = new["placement"]["pos"]["x"]
         placey = new["placement"]["pos"]["y"]
@@ -270,6 +271,7 @@ def do_extra(original: dict, new: dict):
             new["placement"]["scale"] = 1
         new["placement"]["scale"] *= 0.9
         new["placement"]["pos"]["y"] -= 0.15
+        new["placement"]["rotation"] = 270
 
         placex = new["placement"]["pos"]["x"]
         placey = new["placement"]["pos"]["y"]
