@@ -110,7 +110,7 @@ def do_extra(original: dict, new: dict):
         new["placement"]["pos"]["y"] += 1.5
         new["placement"]["flipped"] = True
 
-        new["config"] = {"lore_tabet_content": original["Text"]}
+        new["config"] = {"lore_tablet_content": original["Text"]}
 
     if old_name == "simple_conveyor":
         on = copy.deepcopy(new)
