@@ -145,9 +145,6 @@ def do_extra(original: dict, new: dict):
     if old_name in ("HK_saw", "mary_move_platform", "move_flip_platform"):
         offset = original["offset"]
         speed = original["speed"]
-        if speed < 0:
-            offset += original["span"]
-            speed = -speed
         new["config"] = {
             "mo_track_dist": original["span"],
             "mo_speed": speed * 5,
