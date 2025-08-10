@@ -3,6 +3,7 @@ import uuid
 from tkinter import Tk
 from tkinter.filedialog import askopenfilenames, askdirectory
 from json import loads, dumps
+from math import cos, sin, radians
 
 conversion_info = {
   "IMG_MantisClaw": ["Mantis Claw Binding", 0.0],
@@ -147,10 +148,14 @@ def do_extra(original: dict, new: dict):
         speed = original["speed"]
         new["config"] = {
             "mo_track_dist": original["span"],
-            "mo_speed": speed * 5,
+            "mo_smoothing": 0.9,
+            "mo_speed": speed * 3,
             "mo_offset": offset,
             "mo_rotation": original["angle"]
         }
+        ang = radians(original["angle"])
+        new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
+        new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
 
     if old_name == "HK_saw":
         if "scale" not in new["placement"]:

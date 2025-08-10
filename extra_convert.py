@@ -1,5 +1,6 @@
 import copy
 import uuid
+from math import cos, sin, radians
 
 
 def do_extra(original: dict, new: dict):
@@ -83,10 +84,14 @@ def do_extra(original: dict, new: dict):
         speed = original["speed"]
         new["config"] = {
             "mo_track_dist": original["span"],
-            "mo_speed": speed * 5,
+            "mo_smoothing": 0.9,
+            "mo_speed": speed * 3,
             "mo_offset": offset,
             "mo_rotation": original["angle"]
         }
+        ang = radians(original["angle"])
+        new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
+        new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
 
     if old_name == "HK_saw":
         if "scale" not in new["placement"]:
