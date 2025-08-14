@@ -90,8 +90,10 @@ def do_extra(original: dict, new: dict):
             "mo_rotation": original["angle"]
         }
         ang = radians(original["angle"])
-        new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
-        new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
+
+        if speed > 0:
+            new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
+            new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
 
     if old_name == "HK_saw":
         if "scale" not in new["placement"]:

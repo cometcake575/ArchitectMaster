@@ -157,6 +157,10 @@ def do_extra(original: dict, new: dict):
         new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
         new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
 
+        if speed > 0:
+            new["placement"]["pos"]["x"] -= cos(ang) * original["span"] / 2
+            new["placement"]["pos"]["y"] -= sin(ang) * original["span"] / 2
+
     if old_name == "HK_saw":
         if "scale" not in new["placement"]:
             new["placement"]["scale"] = 1
